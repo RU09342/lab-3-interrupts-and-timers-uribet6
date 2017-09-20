@@ -1,40 +1,15 @@
-# Lab 3: Timers and Interrupts
-During Lab 2, you probably noticed a few unexpected behaviors when trying to program a simple LED blink code. For starters, did you notice that it wasn't as straight forward to have the LED blink at a specific interval (it was not just a simple Clock/Blinking Rate to figure out the required delays). And when you had to deal with multiple LED's blinking at different rates, could you easily maintain the timing between the edges? What about if you wanted the LEDs to be on/off at rates (otherwise known as duty cycle)?
+# TIMER A Blink
+The TIMER peripherals can be used in many situations thanks to it flexibility in features. For this lab, you will be only scratching the surface as to what this peripheral can do. 
 
-And what about that button? Do we really need to keep checking whether or not the button was pressed at the fastest rate possible? What about if we wanted to perform an action on just a falling or rising edge? 
+## Up, Down, Continuous 
+There are a few different ways that the timer module can count. For starters, one of the easiest to initialize is Continuous counting where in the TIMER module will alert you when its own counting register overflows. Up mode allows you to utilize a Capture/Compare register to have the counter stop at a particular count and then start back over again. You can also set the TIMER to Up/Down mode where upon hitting a counter or the overflow, instead of setting the counter back to zero, it will count back down to zero. 
 
-If you have not realized it, this lab is going to focus on how to remedy these problems using built in peripherals in the processors.
+## Task
+Using the TIMER module instead of a software loop, control the speed of two LEDS blinking on your development boards. Experiment with the different counting modes available as well as the effect of the pre-dividers. Why would you ever want to use a pre-divider? What about the Capture and Compare registers? Your code should include a function (if you want, place it in its own .c and .h files) which can convert a desired Hz into the proper values required to operate the TIMER modules.
 
-## Goals For the Lab
-By the end of this lab, you should be able to:
-* Configure the TIMER modules within the MSP430 processors to maintain more accurate timing.
-* Begin to configure interrupts for GPIO.
-* Utilize the built in clock dividers.
-* Begin looking into Low Power Modes within the MSP430 Family
+### Extra Work
+#### Thinking with HALs
+So maybe up to this point you have noticed that your software is looking pretty damn similar to each other for each one of these boards. What if there was a way to abstract away all of the particulars for a processor and use the same functional C code for each board? Just for this simple problem, why don't you try and build a "config.h" file which using IFDEF statements can check to see what processor is on board and initialize particular registers based on that.
 
-The main idea around this lab is the use of interrupts and showing that they can provide a new way of thinking about your system design. At the end of the day, you will be using the concepts developed in the previous lab and tying in the TIMER peripherals to perform what you were brute forcing in the last lab.
-
-## Order of Exercises
-Since GITHUB likes to alphabetize files, you need to perform the exercises in the following order:
-1. Button Interrupt
-2. TIMER A Blink
-3. Button Based Delay
-4. (Optional) Reaction Game
-
-## Deliverables
-By the end of the lab, you will need to provide at a minimum well documented main.c files for *EACH* of the 5 development platforms with accompanying README files which explain exactly how to implement your code. The reason I say minimum is because there are going to be some recommended further practice that is not mandatory, but heavily recommended, especially if you are finishing this lab in only a couple hours. So come Milestone time, I should see 4 folders in your repository with the following titles:
-* Button Interrupt
-* TIMER A Blink
-* Button Based Delay
-* (Optional) Reaction Game
-
-each with the .c and README files for each board. The .c and README files should include the minimum amount of work as well as any extra work that you have done. Each processor should have its project saved in its own folder in each part of the assignment, however you only need one README per part of the assignment.
-
-### README Files
-Since most of these projects will have just a simple main.c file, you do not need to generate 20 README files. Instead, unless you go for a more advanced implementation of the exercises, you just need 1 README per exercise folder. "But how do I make a README with all of the processors included?" Well now we are getting somewhere. You should talk about the general form of your code as it should be very similar for each processor, but you should highlight what the differences are between each processor. For example, do the clocks need to be initialized differently? As another step forward, you could take that information and somehow make it where your code would work on any of the processors without the need to change it between projects.
-
-### Header Files
-You may find yourself by the end of this lab not having generated any header files, which in this case, ignore this section. If you have generated more than just a main.c you most likely have yourself a .h file or two. Remember from the first lab that any header files or libraries that you generate need to have their own README.md which tell the user what dependencies there are, how to install them into their projects, etc.
-
-## Documentation
-Since you will most likely be using pre-made code to make most of your code, so what I am going to require you to do is comment each line of code and what it is doing. If you are using code from TI themselves, it will most likely have some of the comments there. But I want you to use your own words when writing these comments. Dive into the datasheets, look into the MSP430.h file to see what registers are being manipulated and tell me why you need to configure them. 
+#### Low Power Timers
+Since you should have already done a little with interrupts, why not build this system up using interrupts and when the processor is basically doing nothing other than burning clock cycles, drop it into a Low Power mode. Do a little research and figure out what some of these low power modes actually do to the processor, then try and use them in your code. If you really want to put your code to the test, using the MSP430FR5994 and the built in super cap, try and get your code to run for the longest amount of time only using that capacitor as your power source.

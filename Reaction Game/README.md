@@ -1,40 +1,15 @@
-# Lab 3: Timers and Interrupts
-During Lab 2, you probably noticed a few unexpected behaviors when trying to program a simple LED blink code. For starters, did you notice that it wasn't as straight forward to have the LED blink at a specific interval (it was not just a simple Clock/Blinking Rate to figure out the required delays). And when you had to deal with multiple LED's blinking at different rates, could you easily maintain the timing between the edges? What about if you wanted the LEDs to be on/off at rates (otherwise known as duty cycle)?
+# (Optional) Reaction Game
+On to the sort of optional part of the lab. I only say "sort of" because I really think that you should try to implement a game just to not only have a little fun with the class, but also start thinking about what behaviors you want your system to exhibit. Below are only a few recommendations I can think of, but if you want, please show me your creative side and think of another game to implement.
 
-And what about that button? Do we really need to keep checking whether or not the button was pressed at the fastest rate possible? What about if we wanted to perform an action on just a falling or rising edge? 
+## Task
+The final part of this lab is to generate a game using buttons, timers, and LEDS that is meant to be played with let's say 2+ players. Your game does not have to be complicated, however, I think it would be kind of cool as people start making these games that we can test them out in lab. Along with some awesome documentation to explain how to play your game, you need to also demonstrate to your Professor and/or the Lab Instructor that your game actually works to get credit for this part of the lab. The reason we want to see it in person is A) so we can bask in the glory that is your game, and B) so we can get a good look at the game and see what you have implemented from the lab exercises so far. This is not meant to be a "Grill session" where we rake you over the coals about every single line of code, but we are probably going to ask a few questions just to get an idea for the different ways people are implementing these game ideas.
 
-If you have not realized it, this lab is going to focus on how to remedy these problems using built in peripherals in the processors.
+## "But what processor should I be doing this on?"
+Since this is technically an optional part of the lab, we are not going to force you into picking just one processor or make you do it for them all. What I personally would love to see is people using boards like the FR6989 or F5529 and take advantage of a ton of I/O to maybe do something interesting with LED displays or multiple inputs.
 
-## Goals For the Lab
-By the end of this lab, you should be able to:
-* Configure the TIMER modules within the MSP430 processors to maintain more accurate timing.
-* Begin to configure interrupts for GPIO.
-* Utilize the built in clock dividers.
-* Begin looking into Low Power Modes within the MSP430 Family
+### Game Ideas
+#### Reaction
+This would be a 2 player game where your two players after resetting the processor press their buttons to initialize the game. After at least 5 seconds, one of the LEDs should turn on and your processor then has to determine who was the first person to press the button. The winner could be indicated by blinking particular LEDs. Once you get the core functionality working, you should also add false start protection so players who press the button too early are automatically disqualified.
 
-The main idea around this lab is the use of interrupts and showing that they can provide a new way of thinking about your system design. At the end of the day, you will be using the concepts developed in the previous lab and tying in the TIMER peripherals to perform what you were brute forcing in the last lab.
-
-## Order of Exercises
-Since GITHUB likes to alphabetize files, you need to perform the exercises in the following order:
-1. Button Interrupt
-2. TIMER A Blink
-3. Button Based Delay
-4. (Optional) Reaction Game
-
-## Deliverables
-By the end of the lab, you will need to provide at a minimum well documented main.c files for *EACH* of the 5 development platforms with accompanying README files which explain exactly how to implement your code. The reason I say minimum is because there are going to be some recommended further practice that is not mandatory, but heavily recommended, especially if you are finishing this lab in only a couple hours. So come Milestone time, I should see 4 folders in your repository with the following titles:
-* Button Interrupt
-* TIMER A Blink
-* Button Based Delay
-* (Optional) Reaction Game
-
-each with the .c and README files for each board. The .c and README files should include the minimum amount of work as well as any extra work that you have done. Each processor should have its project saved in its own folder in each part of the assignment, however you only need one README per part of the assignment.
-
-### README Files
-Since most of these projects will have just a simple main.c file, you do not need to generate 20 README files. Instead, unless you go for a more advanced implementation of the exercises, you just need 1 README per exercise folder. "But how do I make a README with all of the processors included?" Well now we are getting somewhere. You should talk about the general form of your code as it should be very similar for each processor, but you should highlight what the differences are between each processor. For example, do the clocks need to be initialized differently? As another step forward, you could take that information and somehow make it where your code would work on any of the processors without the need to change it between projects.
-
-### Header Files
-You may find yourself by the end of this lab not having generated any header files, which in this case, ignore this section. If you have generated more than just a main.c you most likely have yourself a .h file or two. Remember from the first lab that any header files or libraries that you generate need to have their own README.md which tell the user what dependencies there are, how to install them into their projects, etc.
-
-## Documentation
-Since you will most likely be using pre-made code to make most of your code, so what I am going to require you to do is comment each line of code and what it is doing. If you are using code from TI themselves, it will most likely have some of the comments there. But I want you to use your own words when writing these comments. Dive into the datasheets, look into the MSP430.h file to see what registers are being manipulated and tell me why you need to configure them. 
+#### Rapid Pressing
+The object of this 2 player game would be to see who can press their button the fastest up to an arbitrary number of times, for example 50 times. Upon your processor starting up, each player should hold their button down to indicate the start of the game. From that point the LEDs could blink 3 times and after that, both players begin pressing the buttons as fast as possible. First player to the number of button presses wins and can be indicated by flashing LEDs. Remember! Since you are counting the number of times a button is pressed, you need to make sure that you are debouncing properly to ensure there is no inadvertent cheating.
