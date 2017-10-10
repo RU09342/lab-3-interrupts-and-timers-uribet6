@@ -9,7 +9,7 @@ button, whenever the button changed from a value of 1 to 0 the P1IES would trigg
 Once the LEDs toggled, a for loop would run to handle debouncing and then the interrupt would be cleared using the P1IFG register. This register is very important as the processor will not exit the interrupt if 
 the interrupt flag is not cleared.
 
-##Extra Work
+## Extra Work
 This section was implemented on the MSP430FR5994. An extra button was added to turn on/off an LED. Each button controlled one LED and was able to function independent of the other button.
 This was done by using the P5IFG register to identify which button triggered the interrupt. A conditional statement checked to see which flag was raised by checking the value of P5IFG.
 If P5.6 fired the interrupt then the red LED would trigger and if P5.5 fired the interrupt then the green LED would toggle.
