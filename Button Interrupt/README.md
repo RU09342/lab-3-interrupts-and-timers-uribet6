@@ -10,6 +10,6 @@ Once the LEDs toggled, a for loop would run to handle debouncing and then the in
 the interrupt flag is not cleared.
 
 ##Extra Work
- This section was implemented on the MSP430fr5994. An extra button was added to turn on/off an LED. Each button controlled one LED and was able to function independent of the other button.
- This was done by using the P5IFG register to identify which button triggered the interrupt. A conditional statement checked to see which flag was raised by checking the value of P5IFG.
- If P5.6 fired the interrupt then the red LED would trigger and if P5.5 fired the interrupt then the green LED would toggle.
+This section was implemented on the MSP430fr5994. An extra button was added to turn on/off an LED. Each button controlled one LED and was able to function independent of the other button.
+This was done by using the P5IFG register to identify which button triggered the interrupt. A conditional statement checked to see which flag was raised by checking the value of P5IFG.
+If P5.6 fired the interrupt then the red LED would trigger and if P5.5 fired the interrupt then the green LED would toggle.
