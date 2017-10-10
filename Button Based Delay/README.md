@@ -1,12 +1,11 @@
 # Button Based Delay
-Now that you have begun to familiarize yourself with the TIMER modules, why don't we make an interesting change to our code from the last lab.
+Note:  The following explantion will include the ButtonBasedDelay functionality for all processors since the logic does not vary between the MSP430s.
 
-## Task
-Setup your microcontroller to initially blink and LED at a rate of 10Hz upon restarting or powering up. Then utilizing one of the buttons on board, a user should be able to set the delay or blinking rate of the LED by holding down a button. The duration in which the button is depressed should then become the new rate at which the LED blinks. As previously stated, you most likely will want to take advantage of the fact that TIMER modules exist and see if you can let them do a bulk of the work for you.
-
-### Extra Work
-## Reset Button
-What is a piece of electronics without a reset button? Instead of relying on resetting your processor using the built in reset circuitry, why not instead use another button to reset the rate back to 10Hz.
-
-## Button Based Hertz
-Most likely using two buttons, what if instead of making a delay loop based on the time, the user could instead enter a mode where the number of times they pressed the button would become the number in Hz of the blinking rate? How do you think you would implement that with just one button?
+## Explanation
+This portion of the lab called for the use of both port and timer interrupts. Two timers were actually used in this implementation. One timer (lets call it TimerA) was used to trigger the timer interrupts while
+the other was used as a counter whenever the button was pressed (TimerB). NOTE: The names Timer A and TimerB do not refelct the actual timer names that were used in code. TimerB was used to keep track of the amount
+of time that the button was pressed. This time was then stored into the CCRX of Timer A which consequently triggered an interrupt whenever CCRx reached the duration of the button press. However, the majority of the logic 
+was handled in the Portx interrupt. In this interrupt one main thing had to be done in order to save the value of TimerB in TimerA's CCRx. Within the Portx interrupt the interrupt edge had to be flipped.
+This caused the interrupt to trigger again once the button was depressed, allowing the value of TimerB to be saved into TimerA. The edge flip was simply used as a way of knowing when the button was pressed or depressed. When the button was
+depressed and the interrupt triggered and the value of TimerB was stored into TimerA, the edge was once again flipped to allow the interrupt to fire when the button was pressed again. This logic worked as a loop, constantly flipping edges
+depending on if the button was pressed or not.
